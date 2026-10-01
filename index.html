@@ -1,0 +1,292 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>国庆自驾 · 武汉—罗田—武穴</title>
+<style>
+:root{
+  --bg:#faf9f6; --card:#ffffff; --ink:#22252a; --sub:#6b7078; --faint:#9aa0a8;
+  --line:#e8e5de; --accent:#b4592a; --accent-soft:#f7ece4;
+  --ok:#2e7d4f; --ok-soft:#e6f2ea; --warn:#a06a00; --warn-soft:#f8f0dd;
+  --bad:#b3372c; --bad-soft:#f8e8e6;
+}
+@media (prefers-color-scheme: dark){
+  :root{ --bg:#191b1e; --card:#22252a; --ink:#ececec; --sub:#a8adb5; --faint:#7d838c;
+    --line:#33373d; --accent:#d97f4a; --accent-soft:#3a2c22;
+    --ok:#5cb87f; --ok-soft:#1f3227; --warn:#d9a94a; --warn-soft:#38301c;
+    --bad:#e06a5c; --bad-soft:#3a2421; }
+}
+*{box-sizing:border-box;margin:0;padding:0}
+body{background:var(--bg);color:var(--ink);font-family:-apple-system,"PingFang SC","Microsoft YaHei",sans-serif;line-height:1.6;padding-bottom:64px}
+.wrap{max-width:640px;margin:0 auto;padding:0 16px}
+header{padding:28px 0 14px}
+h1{font-size:22px;font-weight:600;letter-spacing:.02em}
+.sub{color:var(--sub);font-size:13px;margin-top:4px}
+.count{display:inline-block;margin-top:10px;font-size:13px;color:var(--accent);background:var(--accent-soft);border-radius:999px;padding:3px 12px}
+.banner{margin:12px 0 0;background:var(--warn-soft);color:var(--warn);border-radius:10px;padding:10px 14px;font-size:13px;line-height:1.5}
+.banner b{font-weight:600}
+nav{position:sticky;top:0;z-index:9;background:var(--bg);padding:10px 0;display:flex;gap:8px;border-bottom:1px solid var(--line)}
+.tab{flex:1;text-align:center;font-size:14px;padding:7px 0;border-radius:999px;color:var(--sub);cursor:pointer;border:1px solid var(--line);background:var(--card)}
+.tab.on{color:var(--accent);border-color:var(--accent);background:var(--accent-soft);font-weight:600}
+section{display:none;padding-top:14px}
+section.on{display:block}
+.card{background:var(--card);border:1px solid var(--line);border-radius:12px;padding:14px;margin-bottom:12px}
+.card h2{font-size:15px;font-weight:600;margin-bottom:8px}
+.route{display:flex;flex-direction:column;gap:0}
+.rnode{display:flex;gap:12px}
+.rdot{display:flex;flex-direction:column;align-items:center;width:18px;flex-shrink:0}
+.rdot i{width:10px;height:10px;border-radius:50%;background:var(--accent);margin-top:7px}
+.rdot::after{content:"";width:2px;flex:1;background:var(--line)}
+.rnode:last-child .rdot::after{display:none}
+.rbody{padding-bottom:14px}
+.rbody b{font-size:14px;font-weight:600;display:block}
+.rbody span{font-size:12px;color:var(--sub)}
+.rows{font-size:13.5px}
+.rows .r{display:flex;gap:10px;padding:5px 0;border-top:1px dashed var(--line)}
+.rows .r:first-child{border-top:none}
+.rows .t{color:var(--faint);font-variant-numeric:tabular-nums;width:44px;flex-shrink:0}
+.rows .a{flex:1}
+.rows .dim{color:var(--sub);font-size:12.5px}
+.tag{display:inline-block;font-size:11px;border-radius:6px;padding:0 6px;margin-left:4px;vertical-align:1px}
+.tag.hot{color:var(--bad);background:var(--bad-soft)}
+.tag.adj{color:var(--warn);background:var(--warn-soft)}
+.tag.mild{color:var(--sub);background:var(--accent-soft)}
+.food li{list-style:none;padding:8px 0;border-top:1px dashed var(--line);font-size:13.5px}
+.food li:first-child{border-top:none}
+.food .dish{font-weight:600}
+.food .desc{color:var(--sub);font-size:12.5px;display:block;margin-top:2px}
+table{width:100%;border-collapse:collapse;font-size:13px}
+th{color:var(--faint);font-weight:400;text-align:left;padding:6px 0;border-bottom:1px solid var(--line);font-size:12px}
+td{padding:7px 0;border-bottom:1px dashed var(--line)}
+tr:last-child td{border-bottom:none}
+td.n,th.n{text-align:right;font-variant-numeric:tabular-nums}
+.cities{display:grid;grid-template-columns:1fr 1fr;gap:8px}
+.city{border:1px solid var(--line);border-radius:10px;padding:10px 12px}
+.city .nm{font-size:13px;font-weight:600}
+.city .idx{font-size:22px;font-weight:600;font-variant-numeric:tabular-nums;line-height:1.25}
+.city .sub2{font-size:11.5px;color:var(--sub)}
+.lv{font-size:11px;border-radius:6px;padding:0 6px}
+.lv1{color:var(--ok);background:var(--ok-soft)} .lv2{color:var(--warn);background:var(--warn-soft)}
+.lv3,.lv4{color:var(--bad);background:var(--bad-soft)}
+.days{display:grid;grid-template-columns:repeat(4,1fr);gap:8px;margin-top:6px}
+.dayc{border:1px solid var(--line);border-radius:10px;padding:8px 4px;text-align:center}
+.dayc .d{font-size:11px;color:var(--faint)}
+.dayc .w{font-size:13px;font-weight:600;margin:2px 0}
+.dayc .t{font-size:12px;font-variant-numeric:tabular-nums}
+.dayc .p{font-size:10.5px;color:var(--faint)}
+.place{font-size:12.5px;color:var(--sub);margin-top:10px}
+.btn{display:block;width:100%;margin-top:12px;padding:11px;border-radius:10px;border:1px solid var(--accent);background:var(--accent-soft);color:var(--accent);font-size:14px;font-weight:600;cursor:pointer}
+.btn:disabled{opacity:.5}
+.upd{font-size:11.5px;color:var(--faint);margin-top:8px;text-align:center}
+.note{font-size:12px;color:var(--faint);line-height:1.7;padding:6px 2px}
+</style>
+</head>
+<body>
+<div class="wrap">
+  <header>
+    <h1>国庆自驾 · 武汉—罗田—武穴</h1>
+    <div class="sub">10月2日–5日 · 4天3晚 · 环线约550km · 风景+美食</div>
+    <span class="count" id="count"></span>
+    <div class="banner"><b>天气提醒：</b>预报 10/2–10/4 三里畈、武穴有毛毛雨/小雨（降水概率 80–99%），10/5 转阴。备雨具防滑鞋；山区雨雾大，云海概率反而更高。</div>
+  </header>
+  <nav>
+    <div class="tab on" data-t="it">行程</div>
+    <div class="tab" data-t="food">美食</div>
+    <div class="tab" data-t="radar">路况·天气</div>
+  </nav>
+
+  <section id="it" class="on">
+    <div class="card">
+      <h2>环线示意</h2>
+      <div class="route">
+        <div class="rnode"><div class="rdot"><i></i></div><div class="rbody"><b>华为武研所（光谷东）</b><span>10/2 出发 · 7:00 前走，避 9–12 点出城峰值</span></div></div>
+        <div class="rnode"><div class="rdot"><i></i></div><div class="rbody"><b>三里畈温泉</b><span>110km/1.5h · 武英高速团陂出口 · 甜柿+温泉 · 宿 D1</span></div></div>
+        <div class="rnode"><div class="rdot"><i></i></div><div class="rbody"><b>薄刀峰 → 九资河·天堂寨</b><span>山路约 70km/1.5h · 宿 D2 · D3 上午天堂寨</span></div></div>
+        <div class="rnode"><div class="rdot"><i></i></div><div class="rbody"><b>武穴（半天）</b><span>麻阳高速约 170km/2.5–3h · 长江日落+横岗山 · 宿 D3</span></div></div>
+        <div class="rnode"><div class="rdot"><i></i></div><div class="rbody"><b>返汉</b><span>10/5 14:00 前出发 · 165km/2.5h · 路桥约80元</span></div></div>
+      </div>
+    </div>
+
+    <div class="card"><h2>D1 · 10/2 周五｜甜柿 + 温泉</h2><div class="rows">
+      <div class="r"><span class="t">07:00</span><span class="a">武研所出发（三环→武英高速→团陂出口）</span></div>
+      <div class="r"><span class="t">09:00</span><span class="a">錾字石村摘甜柿："中国甜柿第一村"，自然脱涩摘下即食，国庆正当季</span></div>
+      <div class="r"><span class="t">12:00</span><span class="a">三里畈吊锅（山水农庄吊锅城，温泉大门旁，人均约¥55）<span class="tag adj">点单说加辣</span></span></div>
+      <div class="r"><span class="t">14:00</span><span class="a">三里畈温泉：70–81℃ 湖北最高温泉，国庆唐风活动；线上票 95–148 元<span class="dim">（出发前电话确认 0713-5103333）</span></span></div>
+      <div class="r"><span class="t">18:30</span><span class="a">晚餐：板栗土鸡汤+板栗红烧肉，国庆正是板栗下树季</span></div>
+      <div class="r"><span class="t">宿</span><span class="a">三里畈镇</span></div>
+    </div></div>
+
+    <div class="card"><h2>D2 · 10/3 周六｜薄刀峰登高 → 九资河</h2><div class="rows">
+      <div class="r"><span class="t">08:00</span><span class="a">出发 → 薄刀峰（约 1.5h 山路）</span></div>
+      <div class="r"><span class="t">09:30</span><span class="a">薄刀峰（4A，80 元）：主峰 1408.2m，云海奇松险峰；自带干粮</span></div>
+      <div class="r"><span class="t">16:00</span><span class="a">下山 → 九资河镇（约 1h，估算）</span></div>
+      <div class="r"><span class="t">17:30</span><span class="a">晚餐：胜利吊锅城（非遗，小份 128 元）或鸠兹宴 + 小吊酒<span class="tag adj">点单说加辣</span></span></div>
+      <div class="r"><span class="t">19:30</span><span class="a">鸠兹古镇夜景灯光秀（免费）</span></div>
+      <div class="r"><span class="t">宿</span><span class="a">九资河镇（可向农户买鲜板栗，约 5–8 元/斤）</span></div>
+    </div></div>
+
+    <div class="card"><h2>D3 · 10/4 周日｜天堂寨 → 武穴</h2><div class="rows">
+      <div class="r"><span class="t">08:30</span><span class="a">天堂寨（4A，80+景交28，索道往返100可选）：大别山主峰 1729m，瀑布群原始森林</span></div>
+      <div class="r"><span class="t">12:30</span><span class="a">圣人堂村农家乐：板栗烧鸡、天堂腊肉、板栗腊味糯米饭</span></div>
+      <div class="r"><span class="t">14:00</span><span class="a">出发 → 武穴（麻阳高速直达）</span></div>
+      <div class="r"><span class="t">17:00</span><span class="a">滨江公园看长江日落（免费）</span></div>
+      <div class="r"><span class="t">18:30</span><span class="a">晚餐：江月楼香辣烤鱼 / 让鸭脑壳飞（重麻重辣）<span class="tag hot">全线最辣一餐</span></span></div>
+      <div class="r"><span class="t">宿</span><span class="a">武穴市区</span></div>
+    </div></div>
+
+    <div class="card"><h2>D4 · 10/5 周一｜武穴半天 → 返汉</h2><div class="rows">
+      <div class="r"><span class="t">07:30</span><span class="a">早餐：大金肥肠粉（民主路，酸辣重口）<span class="tag hot">最贴四川胃</span></span></div>
+      <div class="r"><span class="t">08:30</span><span class="a">横岗山森林公园（免费，观光车 20 可选）约 3h；或武山湖湿地散步</span></div>
+      <div class="r"><span class="t">12:00</span><span class="a">午餐：海军野生鱼馆（长江野生鱼）/ 古乐牛香牛杂锅</span></div>
+      <div class="r"><span class="t">13:00</span><span class="a">买伴手礼：美雅酥糖、大金板鸭、龙坪油面、佛手山药</span></div>
+      <div class="r"><span class="t">14:00</span><span class="a">出发返汉 → 约 16:30 到家</span></div>
+    </div></div>
+    <div class="note">注：九资河红叶 10 月下旬才红，本次看不到；温泉 3–10 月只开部分泡池。完整版见工作区《国庆罗田-武穴自驾行程.md》。</div>
+  </section>
+
+  <section id="food">
+    <div class="card food"><h2>三里畈镇</h2><ul>
+      <li><span class="dish">罗田吊锅</span><span class="tag adj">需加辣</span><span class="desc">火塘吊锅炭火慢炖：腊肉/土鸡/蹄花+萝卜粉丝猪血。山水农庄吊锅城（温泉大门旁，人均约¥55）、山里人家、山外山</span></li>
+      <li><span class="dish">板栗土鸡汤</span><span class="tag mild">清淡</span><span class="desc">罗田十大名吃之首，泥巴罐文火清炖</span></li>
+      <li><span class="dish">錾字石甜柿</span><span class="tag mild">水果</span><span class="desc">9月底–10月初采收旺季，可采摘</span></li>
+    </ul></div>
+    <div class="card food"><h2>九资河 · 天堂寨</h2><ul>
+      <li><span class="dish">非遗天堂吊锅</span><span class="tag adj">需加辣</span><span class="desc">胜利吊锅城（小份128元）、鸠兹宴土鸡吊锅，配小吊酒</span></li>
+      <li><span class="dish">天堂腊肉</span><span class="tag adj">咸香</span><span class="desc">松柏枝熏一个月，"过桥腊肉"大片蒸，可买走</span></li>
+      <li><span class="dish">板栗烧鸡</span><span class="tag mild">咸鲜</span><span class="desc">圣人堂村农家乐，秋日家宴主角</span></li>
+      <li><span class="dish">晃子汤</span><span class="tag mild">清淡</span><span class="desc">猪血+内脏慢炖年猪菜，遇上就尝</span></li>
+    </ul></div>
+    <div class="card food"><h2>武穴</h2><ul>
+      <li><span class="dish">大金肥肠粉</span><span class="tag hot">本身够辣</span><span class="desc">民主路，酸辣重口（D4 早餐）</span></li>
+      <li><span class="dish">让鸭脑壳飞</span><span class="tag hot">本身够辣</span><span class="desc">粮食路，重麻重辣江湖菜、干锅、霸道烤鱼（到店前点评复核）</span></li>
+      <li><span class="dish">江月楼</span><span class="tag hot">本身够辣</span><span class="desc">沿江大道，香辣烤鱼、香辣牛蛙虾、酸菜鱼</span></li>
+      <li><span class="dish">长江江鲜</span><span class="tag adj">可加辣</span><span class="desc">海军野生鱼馆（沿江大道）、滨江烧烤夜市</span></li>
+    </ul></div>
+    <div class="card"><h2>伴手礼</h2><table>
+      <tr><th>物品</th><th>哪里买</th><th class="n">参考价</th></tr>
+      <tr><td>罗田鲜板栗</td><td>九资河/圣人堂农户</td><td class="n">5–8 元/斤</td></tr>
+      <tr><td>罗田甜柿</td><td>錾字石村现摘</td><td class="n">现场询价</td></tr>
+      <tr><td>天堂腊肉</td><td>九资河农户</td><td class="n">按斤询价</td></tr>
+      <tr><td>九资河茯苓</td><td>九资河镇</td><td class="n">询价</td></tr>
+      <tr><td>小吊酒/老米酒</td><td>九资河/鸠兹古邑</td><td class="n">询价</td></tr>
+      <tr><td>美雅武穴酥糖</td><td>武穴特产店</td><td class="n">15–26 元/400g</td></tr>
+      <tr><td>大金板鸭</td><td>武穴特产店</td><td class="n">询价</td></tr>
+      <tr><td>龙坪油面</td><td>武穴特产店</td><td class="n">询价</td></tr>
+    </table></div>
+  </section>
+
+  <section id="radar">
+    <div class="card"><h2>沿线城市实时路况</h2><div class="cities" id="watch"></div></div>
+    <div class="card"><h2>全国实时拥堵榜 TOP 8</h2><table id="top"><tr><th></th><th>城市</th><th class="n">指数</th><th class="n">车速</th><th class="n">等级</th></tr></table></div>
+    <div class="card"><h2>目的地天气 · 行程期间</h2><div id="wx"></div></div>
+    <button class="btn" id="refresh">刷新天气与路况</button>
+    <div class="upd" id="upd"></div>
+    <div class="note" id="rnote">路况数据源：百度地图交通大数据平台；天气：Open-Meteo。打开本页自动加载最新云端快照；点刷新按钮会拉取实时天气，路况以页面标注的数据时间为准。</div>
+  </section>
+</div>
+
+<script>
+var DATA = {
+  updatedAt: "2026-10-01 22:30",
+  watch: [{name:"武汉",index:1.31,speed:33.43,level:1,weekRate:-0.108}],
+  top: [
+    {name:"大理",index:1.844,speed:22.93,level:3},{name:"珠海",index:1.659,speed:36.28,level:2},
+    {name:"南昌",index:1.581,speed:28.97,level:2},{name:"大同",index:1.533,speed:29.15,level:2},
+    {name:"西宁",index:1.438,speed:39.4,level:1},{name:"洛阳",index:1.389,speed:29.94,level:1},
+    {name:"泰安",index:1.385,speed:31.42,level:1},{name:"重庆",index:1.382,speed:32.01,level:1}
+  ],
+  weather: [
+    {name:"三里畈(罗田)",lat:30.79,lon:115.32,days:[
+      {date:"2026-10-02",tmax:21.8,tmin:15.3,precip:80,text:"毛毛雨"},
+      {date:"2026-10-03",tmax:19.9,tmin:16.8,precip:98,text:"毛毛雨"},
+      {date:"2026-10-04",tmax:24.6,tmin:17.5,precip:81,text:"毛毛雨"},
+      {date:"2026-10-05",tmax:22.9,tmin:12.6,precip:2,text:"阴"}]},
+    {name:"武穴",lat:29.85,lon:115.56,days:[
+      {date:"2026-10-02",tmax:20.8,tmin:17.8,precip:89,text:"毛毛雨"},
+      {date:"2026-10-03",tmax:22.7,tmin:18.2,precip:96,text:"小雨"},
+      {date:"2026-10-04",tmax:20.8,tmin:19.4,precip:99,text:"毛毛雨"},
+      {date:"2026-10-05",tmax:23.4,tmin:16.5,precip:37,text:"毛毛雨"}]}
+  ]
+};
+var LV={1:"畅通",2:"缓行",3:"拥堵",4:"严重拥堵"};
+var WMO={0:"晴",1:"多云间晴",2:"多云",3:"阴",45:"雾",48:"雾",51:"毛毛雨",53:"毛毛雨",55:"毛毛雨",61:"小雨",63:"中雨",65:"大雨",80:"阵雨",81:"强阵雨",82:"暴雨",95:"雷雨"};
+
+function esc(s){return String(s==null?"":s).replace(/[&<>"]/g,function(c){return{"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;"}[c];});}
+function md(d){var p=d.split("-");return p[1]+"/"+p[2];}
+
+function renderRadar(){
+  var w=document.getElementById("watch");
+  w.innerHTML=DATA.watch.map(function(c){
+    var wr=c.weekRate*100, wt=(wr>=0?"+":"")+wr.toFixed(0)+"%";
+    return "<div class='city'><div class='nm'>"+esc(c.name)+" <span class='lv lv"+c.level+"'>"+LV[c.level]+"</span></div>"
+      +"<div class='idx'>"+c.index.toFixed(2)+"</div>"
+      +"<div class='sub2'>车速 "+c.speed.toFixed(0)+" km/h · 较上周 "+wt+"</div></div>";
+  }).join("");
+  var t=document.getElementById("top");
+  t.innerHTML="<tr><th></th><th>城市</th><th class='n'>指数</th><th class='n'>车速</th><th class='n'>等级</th></tr>"
+    +DATA.top.map(function(c,i){
+      return "<tr><td class='n' style='color:var(--faint)'>"+(i+1)+"</td><td>"+esc(c.name)+"</td><td class='n'>"+c.index.toFixed(2)+"</td><td class='n'>"+c.speed.toFixed(0)+"</td><td class='n'><span class='lv lv"+c.level+"'>"+LV[c.level]+"</span></td></tr>";
+    }).join("");
+  document.getElementById("wx").innerHTML=DATA.weather.map(function(p){
+    return "<div class='place'>"+esc(p.name)+"</div><div class='days'>"+p.days.map(function(d){
+      return "<div class='dayc'><div class='d'>"+md(d.date)+"</div><div class='w'>"+esc(d.text)+"</div><div class='t'>"+Math.round(d.tmin)+"–"+Math.round(d.tmax)+"℃</div><div class='p'>降水 "+Math.round(d.precip)+"%</div></div>";
+    }).join("")+"</div>";
+  }).join("");
+  document.getElementById("upd").textContent="数据时间 "+DATA.updatedAt;
+}
+
+function refresh(){
+  var btn=document.getElementById("refresh"); btn.disabled=true; btn.textContent="刷新中…";
+  var gotSnapshot=false;
+  function done(){ renderRadar(); btn.disabled=false; btn.textContent="刷新天气与路况"; }
+  function liveWeather(){
+    var jobs=DATA.weather.map(function(p){
+      if(!p.lat) return Promise.resolve();
+      var u="https://api.open-meteo.com/v1/forecast?latitude="+p.lat+"&longitude="+p.lon
+        +"&daily=temperature_2m_max,temperature_2m_min,precipitation_probability_max,weathercode&timezone=Asia%2FShanghai&forecast_days=7";
+      return fetch(u).then(function(r){return r.json();}).then(function(j){
+        var dd=j.daily, days=[];
+        for(var i=0;i<dd.time.length;i++){
+          var date=dd.time[i];
+          if(date>="2026-10-02"&&date<="2026-10-05"){
+            days.push({date:date,tmax:dd.temperature_2m_max[i],tmin:dd.temperature_2m_min[i],
+              precip:dd.precipitation_probability_max[i]||0,text:WMO[dd.weathercode[i]]||"—"});
+          }
+        }
+        if(days.length) p.days=days;
+      }).catch(function(){});
+    });
+    return Promise.all(jobs);
+  }
+  fetch("data.json?t="+Date.now()).then(function(r){return r.json();}).then(function(d){
+    if(d&&d.updatedAt){ DATA=d; gotSnapshot=true; }
+  }).catch(function(){}).then(liveWeather).then(function(){
+    if(!gotSnapshot) DATA.updatedAt=new Date().toLocaleString("zh-CN",{hour12:false});
+    done();
+  });
+}
+
+function countdown(){
+  var dep=new Date("2026-10-02T07:00:00+08:00"), back=new Date("2026-10-05T16:30:00+08:00"), now=new Date();
+  var el=document.getElementById("count");
+  if(now<dep){var h=Math.floor((dep-now)/36e5); el.textContent=h>=24?("距出发还有 "+Math.floor(h/24)+" 天 "+(h%24)+" 小时"):("距出发还有 "+h+" 小时");}
+  else if(now<back){el.textContent="行程进行中，一路平安";}
+  else{el.textContent="行程已结束，欢迎回家";}
+}
+
+document.querySelectorAll(".tab").forEach(function(t){
+  t.addEventListener("click",function(){
+    document.querySelectorAll(".tab").forEach(function(x){x.classList.remove("on");});
+    document.querySelectorAll("section").forEach(function(x){x.classList.remove("on");});
+    t.classList.add("on"); document.getElementById(t.dataset.t).classList.add("on");
+  });
+});
+document.getElementById("refresh").addEventListener("click",refresh);
+renderRadar(); countdown(); setInterval(countdown,60000);
+fetch("data.json?t="+Date.now()).then(function(r){return r.json();}).then(function(d){
+  if(d&&d.updatedAt){ DATA=d; renderRadar(); }
+}).catch(function(){});
+</script>
+</body>
+</html>

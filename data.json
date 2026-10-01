@@ -1,0 +1,30 @@
+{
+  "updatedAt": "2026-10-01 22:50",
+  "watch": [
+    {"name": "武汉", "index": 1.31, "speed": 33.43, "level": 1, "weekRate": -0.108}
+  ],
+  "top": [
+    {"name": "大理", "index": 1.844, "speed": 22.93, "level": 3},
+    {"name": "珠海", "index": 1.659, "speed": 36.28, "level": 2},
+    {"name": "南昌", "index": 1.581, "speed": 28.97, "level": 2},
+    {"name": "大同", "index": 1.533, "speed": 29.15, "level": 2},
+    {"name": "西宁", "index": 1.438, "speed": 39.4, "level": 1},
+    {"name": "洛阳", "index": 1.389, "speed": 29.94, "level": 1},
+    {"name": "泰安", "index": 1.385, "speed": 31.42, "level": 1},
+    {"name": "重庆", "index": 1.382, "speed": 32.01, "level": 1}
+  ],
+  "weather": [
+    {"name": "三里畈(罗田)", "lat": 30.79, "lon": 115.32, "days": [
+      {"date": "2026-10-02", "tmax": 21.8, "tmin": 15.3, "precip": 80, "text": "毛毛雨"},
+      {"date": "2026-10-03", "tmax": 19.9, "tmin": 16.8, "precip": 98, "text": "毛毛雨"},
+      {"date": "2026-10-04", "tmax": 24.6, "tmin": 17.5, "precip": 81, "text": "毛毛雨"},
+      {"date": "2026-10-05", "tmax": 22.9, "tmin": 12.6, "precip": 2, "text": "阴"}
+    ]},
+    {"name": "武穴", "lat": 29.85, "lon": 115.56, "days": [
+      {"date": "2026-10-02", "tmax": 20.8, "tmin": 17.8, "precip": 89, "text": "毛毛雨"},
+      {"date": "2026-10-03", "tmax": 22.7, "tmin": 18.2, "precip": 96, "text": "小雨"},
+      {"date": "2026-10-04", "tmax": 20.8, "tmin": 19.4, "precip": 99, "text": "毛毛雨"},
+      {"date": "2026-10-05", "tmax": 23.4, "tmin": 16.5, "precip": 37, "text": "毛毛雨"}
+    ]}
+  ]
+}
